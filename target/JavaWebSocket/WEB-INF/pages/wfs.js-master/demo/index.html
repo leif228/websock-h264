@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+	
+	<title>h.264</title>  
+ 
+</head>
+<body>
+   
+
+ 
+   <script type="text/javascript" src="./../dist/wfs.js" ></script>  
+  
+   <div class="wfsjs">
+   <video id="video1"  width="640" height="480" controls></video> 
+   <div class="ratio">
+   		<input id="fileName" type="text" placeholder="input fileName"/>
+   		<button onclick="send()">发送消息</button>
+   </div>
+   </div>
+ 
+    <script>
+    var wfs = null;
+    
+	window.onload = function () {
+		var websocket = null;
+		
+	    //判断当前浏览器是否支持WebSocket
+	    if ('WebSocket' in window) {
+	        websocket = new WebSocket("ws://localhost:8080/JavaWebSocket/websocket");
+	    }
+	    else {
+	        alert('当前浏览器 Not support websocket')
+	    }
+	    
+        if (Wfs.isSupported()) {
+        	
+            var video1 = document.getElementById("video1"),
+            wfs = new Wfs();    
+            //wfs.attachMedia(video1,'ch11');
+            wfs.attachWebsocket(websocket,'ch11333');
+        }
+     
+    };
+    
+    //发送消息
+    function send() {
+        var message = document.getElementById('fileName').value;
+        if ('WebSocket' in window) 
+        	wfs.websocketSendMessage(message);
+    }
+
+ 
+    </script>
+	
+</body>
+</html>
